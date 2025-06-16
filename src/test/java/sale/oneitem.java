@@ -87,27 +87,41 @@ private Display display;
         {
 
 
-            if("".equals(barcode))
+            if(isNull(barcode))
             {
-                display.setText("Scanning error:empty barcode");
+                displayNull();
                 return ;
             }
 
 
+            if (hasBarCode(barcode))
+
+                    displayBarCode(barcode);
+
+            else
+                    displayProductNotFound(barcode);
 
 
+        }
 
+        private void displayNull() {
+            display.setText("Scanning error:empty barcode");
+        }
 
+        private static boolean isNull(String barcode) {
+            return "".equals(barcode);
+        }
 
-                if (pro.containsKey(barcode))
+        private void displayProductNotFound(String barcode) {
+            display.setText("Product not found for "+ barcode);
+        }
 
-                   display.setText(pro.get(barcode));
+        private void displayBarCode(String barcode) {
+            display.setText(pro.get(barcode));
+        }
 
-                else
-                    display.setText("Product not found for "+barcode);
-
-
-
+        private boolean hasBarCode(String barcode) {
+            return pro.containsKey(barcode);
         }
     }
 }
